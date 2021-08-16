@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Εγγραφή Χρήστη</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/validation.css">
+
+</head>
+<body>
+    <div class="container justify-content-center align-items-center mt-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h4 class="card-title mb-4">Εγγραφή Χρήστη</h5>
+                        <form action="/register" class="validated-form" method="POST" novalidate>
+                            <div class="mb-3">
+                                <label class="form-label" for="username">Όνομα Χρήστη</label>
+                                <input class="form-control" type="text" id="username" name="username" required></label>
+                                <div class="valid-feedback">Looks good!</div>
+                                <div class="invalid-feedback">Please choose a username.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="mail">Διεύθυνση Email</label>
+                                <input class="form-control" type="email" id="mail" name="mail" required></label>
+                                <div class="valid-feedback">Looks good!</div>
+                                <div class="invalid-feedback">Please provide a valid email.</div>
+                            </div>
+    
+                            <div class="mb-4">
+                                <label class="form-label" for="password">Κωδικός</label>
+                                <input class="form-control" type="password" id="password" name="password" pattern="^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&+=]).{8,}" required></label>
+                                <div class="valid-feedback">Looks good!</div>
+                                <div class="invalid-feedback">Please match the requested format.</div>
+
+                            </div>
+                              <button class="btn btn-success btn-block mb-4">Εγγραφή</button>
+
+                        </form>
+                        <div id="message">
+                            <h5>Ο κωδικός πρέπει να περιλαμβάνει:</h5>
+                            <p id="character" class="invalid">Έναν <b>ειδικό</b> χαρακτήρα</p>
+                            <p id="capital" class="invalid">Ένα <b>κεφαλαίο</b> γράμμα</p>
+                            <p id="number" class="invalid">Έναν <b>αριθμό</b></p>
+                            <p id="length" class="invalid">Τουλάχιστον <b>8 χαρακτήρες</b></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/javascript/validation.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+
+    <script>
+    (function () {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.validated-form')
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+        }, false)
+        })
+    })()
+    </script>
+</body>
+</html>
