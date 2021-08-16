@@ -9,15 +9,15 @@ const getUserInfo = require("../public/javascript/userInfo");
 
 router.get("/", isLoggedIn, async (req, res) => {
 
-  const entries = await Har.find({user: req.user._id}).sort({timestamp: -1}).lean()
-
-  if(entries) {
+  try {
+    const entries = await Har.find({user: req.user._id}).sort({timestamp: -1}).lean()
     const timestamp = entries[0].timestamp;
     return res.render('userHome', {entries: entries.length, timestamp});
-  }
-  res.render('userHome');
 
-  });
+  } catch(error) {
+    res.render('userHome');
+  }
+});
 
 router.get("/profile", isLoggedIn, (req, res) => {
     res.render('userProfile')
@@ -28,7 +28,7 @@ router.post("/passwordUpdate", isLoggedIn, (req, res) => {
     req.user.changePassword(current_password, password, err => {
       if(err) {
         req.flash('error', 'Password is incorrect');
-        res.redirect('/userProfile');
+        res.redirect('/user/profile');
       }
       else {
         req.flash('success', 'Successfully changed the password')
