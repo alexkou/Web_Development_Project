@@ -3,16 +3,22 @@ const router = express.Router();
 
 const User = require("../models/user");
 const Har = require("../models/har");
+const HeatMap = require("../models/heatmap");
 
 const {isLoggedIn} = require('../middleware');
 const getUserInfo = require("../public/javascript/userInfo");
+const GeoData = require('../public/javascript/GeoData');
 
 router.get("/", isLoggedIn, async (req, res) => {
 
   try {
     const entries = await Har.find({user: req.user._id}).sort({timestamp: -1}).lean()
     const timestamp = entries[0].timestamp;
-    return res.render('userHome', {entries: entries.length, timestamp});
+
+    const heatMapData = await HeatMap.find({user: req.user._id}, {lat:1, lon:1, intensity:1, _id:0}).lean();
+
+    res.render('userHome', {entries: entries.length, timestamp, heatMapData});
+
 
   } catch(error) {
     res.render('userHome');
@@ -51,7 +57,6 @@ router.post("/usernameUpdate", isLoggedIn, async (req, res) => {
       user.username = new_username;
       await user.save();
 
-      // req.flash('success', `Successfully changed the username to: ${new_username}`)
       res.redirect('/user');
     }
 })
@@ -71,6 +76,17 @@ router.post('/harUpload', isLoggedIn, async (req, res) => {
     }
     await Har.create(array);
 
+  
+    const heatData = await GeoData(json_file)
+
+    const arr=[];
+
+    for (let i=0; i<heatData.length; i++) {
+      let entry = {user: req.user._id, ip: heatData[i].query, lat: heatData[i].lat, lon: heatData[i].lon, intensity: heatData[i].intensity};
+      arr.push(entry);
+    }
+
+    await HeatMap.create(arr);
 
     req.flash('success', `Successfully uploaded ${json_file.length} HTTP entries`);
     res.redirect('/user')
