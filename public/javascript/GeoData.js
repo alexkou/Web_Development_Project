@@ -1,4 +1,4 @@
-const axios = require('axios')
+const axios = require('axios');
 
 async function GeoData (json_file) {
 
@@ -33,30 +33,41 @@ async function GeoData (json_file) {
 
       ips = Object.keys(obj)
 
-      mydata = JSON.stringify(ips)
+      var chunk_array;
+      var merge_object = [];
 
       const url = "http://ip-api.com/batch/?fields=query,lat,lon";
 
       try {
-          const response = await axios({method: 'post',  url, data: mydata})
 
-          if (response && response.data) {
+        for (let i=0; i<ips.length; i+=100) {
+            
+            chunk_array = ips.slice(i, i+100)
+            mydata = JSON.stringify(chunk_array)
 
-            for (let i=0; i<response.data.length; i++) {
-                for (ip in obj) {
-                    if (ip == response.data[i].query) {
-                        response.data[i]["intensity"] = parseFloat(obj[ip]);
+            const response = await axios({method: 'post',  url, data: mydata})
+
+            if (response && response.data) {
+
+                for (let j=0; j<response.data.length; j++) {
+                    for (ip in obj) {
+                        if (ip == response.data[j].query) {
+                            response.data[j]["intensity"] = parseFloat(obj[ip]);
+                        }
                     }
                 }
-            }
-              return response.data
-          }
-      }
 
-      catch (error) {
-          console.log(error)
-      }
+                merge_object = merge_object.concat(response.data);
 
+              }
+        }
+
+        return merge_object;
+
+      } catch (error) {
+            console.log(error)
+      }
+      
 }
 
 module.exports = GeoData;

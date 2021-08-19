@@ -14,7 +14,7 @@ document.getElementById("harInput").onchange = function () {
 
       const startedDateTime = json.log.entries.map(entry => entry.startedDateTime);
       const timings = json.log.entries.map(entry => entry.timings.wait);
-      const serverIP = json.log.entries.map(entry => entry.serverIPAddress);
+      const serverIP = json.log.entries.map(entry => entry.serverIPAddress.replace(/[\[\]']+/g,''));
 
       const method = json.log.entries.map(entry => entry.request.method);
       const url = json.log.entries.map(entry => entry.request.url);
