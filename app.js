@@ -8,10 +8,11 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 
 const userRoutes = require('./routes/user');
+const adminRoutes = require('./routes/admin'); //diko mou 
 
 const User = require("./models/user");
 
-
+const {isLoggedIn} = require('./middleware'); //test
 
 // Local database
 // mongoose.connect("mongodb://localhost:27017/project", {
@@ -81,9 +82,19 @@ app.post("/login", passport.authenticate('local', {failureFlash: true, failureRe
     req.flash('success', `Welcome back, ${req.user.username}!`)
     return res.redirect("/user");
   }
-  res.send("ADMIN")
+  
+  else if (req.user.usertype === 'admin') {
+    req.flash('success', `Welcome back, ${req.user.username}!`)
+    return res.redirect("/admin");
+  }
+  
+//  res.send("ADMIN")
 
 });
+
+app.get("/admin", isLoggedIn, (req, res) => {  // PREPEI NA PAEI STO ROUTE (na fugei to isLoggedIn mazi me auto)
+  res.render('adminHome')
+})
 
 app.get("/register", (req, res) => {
   res.render("register");
@@ -107,6 +118,9 @@ app.get('/logout', (req,res) => {
 })
 
 app.use('/user', userRoutes);
+
+app.use('/admin', adminRoutes); // diko mou
+
 
 app.listen(3000, () => {
   console.log("Listening to port 3000");
