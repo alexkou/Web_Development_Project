@@ -11,11 +11,22 @@ const userRoutes = require('./routes/user');
 
 const User = require("./models/user");
 
-mongoose.connect("mongodb://localhost:27017/project", {
+
+
+// Local database
+// mongoose.connect("mongodb://localhost:27017/project", {
+//   useNewUrlParser: true,
+//   useCreateIndex: true,
+//   useUnifiedTopology: true,
+// });
+
+// Cloud database
+mongoose.connect("mongodb+srv://alexkou:webproject@cluster0.yt9j6.mongodb.net/project?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
 });
+
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
