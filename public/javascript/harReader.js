@@ -59,6 +59,7 @@ document.getElementById("harInput").onchange = function () {
           for (let i=0; i<json.log.entries.length; i++) {
               for (key of method[i]) {
                   if (key.name === header_name) {
+                    var header_name = header_name.replace(/[^a-zA-Z]/g, "");
                       headers.push({
                           [header_name] : key.value
                       });

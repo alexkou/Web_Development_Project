@@ -8,11 +8,96 @@ const HeatMap = require("../models/heatmap");
 const {isLoggedIn} = require('../middleware');
 
 
-router.get("/", isLoggedIn, async (req, res) => {
+router.get("/", isLoggedIn,  async (req, res) => {
 
-    const num_users = await User.countDocuments({usertype: 'user'})
-    
-    res.render('adminHome', {num_users});
+    const num_users = await User.countDocuments({usertype: 'user'}).lean()
+
+    const methods = await Har.aggregate([
+        {"$group": 
+            {
+                "_id":  "$data.method",
+                "count": { "$sum": 1}
+            } 
+        },
+        {"$group": 
+            {
+                "_id": null,
+                "counts": 
+                {
+                    "$push": 
+                    {
+                        "k": "$_id", 
+                        "v": "$count"
+                    }
+                }
+            } 
+        }, 
+        { "$replaceRoot": 
+            {
+                "newRoot": { "$arrayToObject": "$counts"}
+            }
+        }
+    ]);
+
+    const statusObject = await Har.aggregate([
+        {"$group": 
+            {
+                "_id":  "$data.status",
+                "count": { "$sum": 1}
+            } 
+        },
+        {"$group": 
+            {
+                "_id": null,
+                "counts": 
+                {
+                    "$push": 
+                    {
+                        "k": "$_id", 
+                        "v": "$count"
+                    }
+                }
+            } 
+        }, 
+        { "$replaceRoot": 
+            {
+                "newRoot": { "$arrayToObject": "$counts"}
+            }
+        }
+    ]);
+
+    const domains = await Har.distinct("data.url").lean();
+
+    const ispObject = await Har.aggregate([
+        {"$group": 
+            {
+                "_id":  "$userIsp",
+                "count": { "$sum": 1}
+            } 
+        },
+        {"$group": 
+            {
+                "_id": null,
+                "counts": 
+                {
+                    "$push": 
+                    {
+                        "k": "$_id", 
+                        "v": "$count"
+                    }
+                }
+            } 
+        }, 
+        { "$replaceRoot": 
+            {
+                "newRoot": { "$arrayToObject": "$counts"}
+            }
+        }
+    ]);
+
+    const content_type = await Har.distinct("data.contenttype").lean()
+
+    res.render('adminHome', {num_users, methodObject: methods[0], statusObject: statusObject[0], domains: domains.length, ispObject: ispObject[0]});
   })
 
 router.get("/timeanalysis", isLoggedIn, (req, res) => {

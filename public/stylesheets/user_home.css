@@ -3,6 +3,16 @@ body {
 
  }
 
+th, td {
+    padding: 5px;
+    text-align: center;
+}
+
+table,td,th{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
 /* Toggle Styles */
 
 #wrapper {

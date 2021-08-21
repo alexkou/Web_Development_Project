@@ -29,12 +29,12 @@ const HarSchema = new Schema ({
         url: String,
         status: String,
         statusText: String,
-        content_type: String,
-        cache_control: String,
+        contenttype: String,
+        cachecontrol: String,
         pragma: String,
         expires: String,
         age: String,
-        last_modified: String,
+        lastmodified: String,
         Host: String,
     }
 });

@@ -4,9 +4,60 @@
     <h2 class="mb-5">Home Page</h2>
         <div class="row">
             <div class="col-md-6">
-                <div class="mb-3">
-                    <h4>Πλήθος Χρηστών: <%= num_users %> </h4>
-                </div>
+                <h4 class="mb-5">Πλήθος Χρηστών: <%= num_users %> </h4>
+                <h4 class="mb-3">Πλήθος εγγραφών ανά τύπο αίτησης</h4>
+
+                <table style="width: 100%" class="mb-5">
+                    <tr>
+                        <th>Μέθοδος</th>
+                        <th>Πλήθος</th>
+                    </tr>
+
+                    <% for (method in methodObject) {%> 
+                        <tr>
+                            <td> <%= method %> </th>
+                            <td> <%= methodObject[method]  %>  </th>
+                    </tr>
+                    <% } %> 
+                </table>
+
+                <h4 class="mb-3">Πλήθος εγγραφών ανά κωδικό απόκρισης</h4>
+
+                <table style="width: 100%" class="mb-5"">
+                    <tr>
+                        <th>Κωδικός απόκρισης</th>
+                        <% for (status in statusObject) { %> 
+                            <td><%= status %> </td>
+                        <% } %> 
+                    </tr>
+
+                    <tr>
+                        <th>Πλήθος</th>
+                        <% for (status in statusObject) { %> 
+                            <td><%= statusObject[status] %> </td>
+                        <% } %> 
+                    </tr>
+                </table>
+
+                <h4 class="mb-5">Πλήθος μοναδικών Domains: <%= domains %> </h4>
+
+                <h4 class="mb-3">Πλήθος παρόχων συνδεσιμότητας </h4>
+                <table style="width: 100%" class="mb-5">
+                    <tr>
+                        <th>Πάροχος</th>
+                        <th>Αιτήματα</th>
+                    </tr>
+
+                    <% for (isp in ispObject) {%> 
+                        <tr>
+                            <td> <%= isp %> </th>
+                            <td> <%= ispObject[isp]  %>  </th>
+                    </tr>
+                    <% } %> 
+                </table>
+
+
+
             </div>
         </div>
 
