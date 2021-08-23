@@ -1,21 +1,24 @@
 <% layout('layouts/userLayout') %>
 <link rel="stylesheet" href="/stylesheets/validation.css">
 
+<div style="padding-bottom: 130px;"></div>
+
+<h2 style="padding-bottom: 10px; text-align: center;">Διαχείριση Προφίλ</h2>
 
 <div class="container">
-    <h2 class="mb-5">Διαχείριση Προφίλ</h2>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="accordion" id="accordionExample">
 
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> 
+  <div class="row">
+    <div class="col-md-6" id="profform">
+      <div class="accordion" id="accordionExample">
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> 
                   Αλλαγή password </button>
-            </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-              <div class="accordion-body"> 
-                <form action="/user/passwordUpdate" class="validated-form" method="POST" novalidate>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body"> 
+              <form action="/user/passwordUpdate" class="validated-form" method="POST" novalidate>
 
                     <div class="mb-4">
                         <label class="form-label" for="current_password">Τρέχων συνθηματικό</label>

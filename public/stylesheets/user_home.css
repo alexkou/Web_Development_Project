@@ -1,6 +1,11 @@
 body {
     overflow-x: hidden;
-
+    background-image: linear-gradient(to bottom, rgba(13,110,253,0.5), rgba(211,211,211,0.5)) , url("https://pixabay.com/get/g576b8777c2962357eeaa9130530a5a98fc10849adba371297ce6e20574e4d587d25cc85c5479f02a56099cb55761f7e2_1920.jpg");
+    height: 100%;
+    margin: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
  }
 
 th, td {
@@ -59,9 +64,9 @@ table,td,th{
 
 /* Sidebar Styles */
 
-.navbar {
+/* .navbar {
     padding-bottom: 1.5rem;
-}
+} */
 
 .sidebar-nav {
     position: absolute;
@@ -136,4 +141,40 @@ table,td,th{
         position: relative;
         margin-right: 0;
     }
+}
+
+#myMap {
+    width: 1252px; 
+    height: 550px; 
+    text-align: center; 
+    margin: auto;
+    display: grid; 
+    border: 5px solid whitesmoke;
+}
+
+
+#righth5 {
+    font-weight: bolder;
+    display:inline-flex;
+    float: right;
+} 
+
+#lefth5 {
+    display: inline;
+    text-align: left;
+    font-weight: bolder;
+} 
+
+#profform {    
+    top: 50%;
+    left: 50%;
+    margin: -25px 0 0 -25px;
+    text-align:center; 
+    margin:auto; 
+    display:grid; 
+}
+
+#harfile {
+    font-weight: bold;
+    font-size: larger;
 }

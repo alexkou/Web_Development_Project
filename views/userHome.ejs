@@ -1,37 +1,39 @@
 <% layout('layouts/userLayout') %>
 
 <div class="container justify-content-center align-items-center mt-3">
-    <h2 class="mb-5">Home Page</h2>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label for="harInput" class="form-label">Επίλεξτε το Har αρχείο που θέλετε να ανεβάσετε</label>
-                    <input class="form-control" type="file" accept=".har" id="harInput">
-                    <button class="btn btn-primary mt-3" id="harDownload">Download</button>
-                    <form action="/user/harUpload" method="POST">
-                        <input type="hidden" id="harOutput" name="harOutput"></input>
-                        <button class="btn btn-primary mt-3" type="submit" id="harUpload">Upload</button>
-                    </form>
 
-                  </div>
-            </div>
-            <div class="col-md-6">
-                <h3>Number of entries: <%= typeof entries != 'undefined'?  entries: 0 %> </h3>
-                <h3>Last Upload: <%= typeof timestamp != 'undefined'? timestamp.toLocaleString(): "-" %> </h3>
-                <input type="hidden" id="heatMapData" value="<%= typeof heatMapData != 'undefined'? JSON.stringify(heatMapData): "" %>">  </input>
+    <div style="padding-top: 25px;"></div>
 
+    <div class="col-md-12" style="display: block;">
+        <h4 id="lefth5">Number of entries: <%= typeof entries != 'undefined'?  entries: 0 %> </h4>
+        <h4 id="righth5">Last Upload: <%= typeof timestamp != 'undefined'? timestamp.toLocaleString(): "-" %> </h4>
+        <input type="hidden" id="heatMapData" value="<%= typeof heatMapData != 'undefined'? JSON.stringify(heatMapData): "" %>">  </input>
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <div id="myMap">  </div>
+        </div>
+    </div>
+
+    <div></div>
+
+    <div class="row">
+        <div class="col-md-7" style="text-align:center; margin:auto; display:flex; display:grid; padding-top: 1.5rem;">
+            <div class="mb-3">
+                <label for="harInput" class="form-label" id="harfile">Επιλέξτε το Har αρχείο που θέλετε να ανεβάσετε</label>
+                <input class="form-control" type="file" accept=".har" id="harInput">
+                <button class="btn btn-primary mt-3" id="harDownload">Download</button>
+                <form action="/user/harUpload" method="POST" style="display: inline;">
+                    <input type="hidden" id="harOutput" name="harOutput"></input>
+                    <button class="btn btn-primary mt-3" type="submit" id="harUpload">Upload</button>
+                </form>
             </div>
         </div>
+    </div>
 
-        <div class="row">
-            <div class="col-12">
-                <h3 class="mt-5">Heat Map</h3>
-                    <div id="myMap" style="width: 800px; height: 500px;">  </div>
-            </div>
-        </div>
  </div>
 
  <script src="../javascript/harReader.js"></script>
  <script src="../javascript/leaflet-heat.js"></script>
-
  <script src="../javascript/heatmap.js"></script>
