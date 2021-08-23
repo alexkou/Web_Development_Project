@@ -6,43 +6,59 @@
 
     <title>Σύνδεση Χρήστη</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/loginregister.css">
 
 </head>
 
 <body>
-
-    <div class="container justify-content-center align-items-center mt-5">
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <%- include('partials/flash') %> 
-                <div class="card shadow" style="top: 25%;">
-                    <div class="card-body">
-                        <h4 class="card-title mb-4" style="text-align: center;">Σύνδεση Χρήστη</h5>
-                        <form action="/login" method="POST">
-
-                            <div class="mb-3">
-                                <label class="form-label" for="username">Όνομα Χρήστη</label>
-                                <input class="form-control" type="text" id="username" name="username" autofocus required></label>
-                            </div>
     
-                            <div class="mb-4">
-                                <label class="form-label" for="password">Κωδικός</label>
-                                <input class="form-control" type="password" id="password" name="password" required></label>
-                            </div>
-                                <button class="btn btn-success btn-block mb-4" style="text-align:center; margin:auto; display:flex; display:grid;">Σύνδεση</button>
-                            <div class="mb-3">
-                                <i>Δεν έχετε ακόμα λογαριασμό;</i> 
-                                <a href="/register" style="text-decoration:none" onmouseover="style='text-decoration:underline'" onmouseout="style='text-decoration:none'">Εγγραφείτε</a>
-                            </div>
-                        </form>
-                    </div>
+    <div class="container-fluid ps-md-0">
+        
+        <%- include('partials/flash') %>
+
+        <div class="row g-0">
+          <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image">
+              <!-- <h2 style="text-align: center;">Web project</h2> -->
+          </div>
+          <div class="col-md-8 col-lg-6">
+            <div class="login d-flex align-items-center py-5">
+                <!-- Gia allagi sto xrwma tou background ^ -->
+              <div class="container">
+                
+                <div class="row">
+                  <div class="col-md-9 col-lg-8 mx-auto" > 
+                    <h3 class="login-heading mb-4">Σύνδεση Χρήστη</h3>
+      
+                    <form action="/login" method="POST">
+                      
+                      <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="username" name="username" autofocus required>
+                        <label class="form-label" for="username">Όνομα Χρήστη</label>
+                      </div>
+                      
+                      <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="password" name="password" required>
+                        <label class="form-label" for="password">Κωδικός</label>
+                      </div>
+
+                      <div class="d-grid">                        
+                        <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit">Sign in</button>
+
+                        <div class="mb-3">
+                            <i>Δεν έχετε ακόμα λογαριασμό;</i> 
+                            <a href="/register" style="text-decoration:none" onmouseover="style='text-decoration:underline'" onmouseout="style='text-decoration:none'">Εγγραφείτε</a>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-
-    
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-
+      </div>
+   
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+  
 </html>
