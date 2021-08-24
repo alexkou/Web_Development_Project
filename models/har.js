@@ -33,7 +33,7 @@ const HarSchema = new Schema ({
         cachecontrol: String,
         pragma: String,
         expires: String,
-        age: String,
+        age: Number,
         lastmodified: String,
         Host: String,
     }

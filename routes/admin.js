@@ -8,7 +8,7 @@ const HeatMap = require("../models/heatmap");
 const {isLoggedIn} = require('../middleware');
 
 
-router.get("/", isLoggedIn,  async (req, res) => {
+router.get("/", isLoggedIn, async (req, res) => {
 
     const num_users = await User.countDocuments({usertype: 'user'}).lean()
 
@@ -95,10 +95,48 @@ router.get("/", isLoggedIn,  async (req, res) => {
         }
     ]);
 
+
+    let contentTypeArray = [];
+
     const content_type = await Har.distinct("data.contenttype").lean()
 
-    res.render('adminHome', {num_users, methodObject: methods[0], statusObject: statusObject[0], domains: domains.length, ispObject: ispObject[0]});
-  })
+    for (let i=0; i<content_type.length; i++) {
+        
+        let contentTypeAvgAge = await Har.aggregate ([
+            {
+                "$match": {
+                    "data.contenttype": content_type[i]
+                }
+            },
+
+            {
+                "$group": {
+                    "_id": content_type[i],
+                    "average": {"$avg": {"$toInt": "$data.age"}}
+                }
+            }
+
+        ]);
+
+        let object = {
+            type: content_type[i], 
+            avg: contentTypeAvgAge[0].average
+        }
+
+        contentTypeArray.push(object)
+
+    }
+
+    res.render('adminHome', {
+        num_users, 
+        methodObject: methods[0], 
+        statusObject: statusObject[0], 
+        domains: domains.length, 
+        ispObject: ispObject[0],
+        contentTypeArray
+    });
+
+})
 
 router.get("/timeanalysis", isLoggedIn, (req, res) => {
     res.render('adminTimeanalysis')

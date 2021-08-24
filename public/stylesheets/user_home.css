@@ -1,6 +1,6 @@
 body {
     overflow-x: hidden;
-    background-image: linear-gradient(to bottom, rgba(13,110,253,0.5), rgba(211,211,211,0.5)) , url("https://pixabay.com/get/g576b8777c2962357eeaa9130530a5a98fc10849adba371297ce6e20574e4d587d25cc85c5479f02a56099cb55761f7e2_1920.jpg");
+    background-image: linear-gradient(to bottom, rgba(13,110,253,0.5), rgba(211,211,211,0.5)) , url("https://scontent.fath5-1.fna.fbcdn.net/v/t1.6435-9/239384053_4822890437739028_7697754199148286647_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=730e14&_nc_eui2=AeE4uBLpf9rqal1XgS-QNjLMdZ31zp4YNoV1nfXOnhg2hcLngufZpW5I5I8MqM7QM-gjGNdI7bpI30nZ3bLFh3ih&_nc_ohc=MY-JXe9zN7gAX8NZXfz&tn=OafDGbKuETse1bC7&_nc_ht=scontent.fath5-1.fna&oh=8e5698ed9a6138c36174ee3165b0fd49&oe=6149EDF8");
     height: 100%;
     margin: 0;
     background-size: cover;
