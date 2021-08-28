@@ -1,6 +1,47 @@
 <% layout('layouts/adminLayout') %>
 
 <div class="container justify-content-center align-items-center mt-3">
+    <h2 class="mb-5">Ανάλυση χρόνων απόκρισης</h2>
+        <div class="row">
+            <div class="col-md-4">
 
-<h2>kalispera filoi edw tha exei kapote dedomena gia ton admin PART 4</h2>
+                <h4 class="mb-3">Content Type</h4>
+                <select class="form-select mb-4" id="contentTypeSelection" multiple>
+                    <% for (let i=0; i<content_type.length; i++) {%> 
+                        <option id="<%= i %>" value= "<%= content_type[i]%>"><%= content_type[i] %></option> 
+                    <% } %>
+                </select>
 
+                <h4 class="mb-3">Http methods</h4>
+                <select class="form-select mb-4" id="httpMethod" multiple>
+                    <% for (let i=0; i<http_methods.length; i++) {%> 
+                        <option id="<%= i %>" value= "<%= http_methods[i] %>"><%= http_methods[i] %></option>
+                    <% } %>
+                </select>
+
+                <h4 class="mb-3">Isp</h4>
+                <select class="form-select mb-4" id="ispSelection" multiple>
+                    <% for (let i=0; i<isp.length; i++) {%> 
+                        <option id="<%= i %>" value= "<%= isp[i] %>"><%= isp[i] %></option>
+                    <% } %>
+                </select>
+
+                <h4 class="mb-3">Day</h4>
+                <select class="form-select mb-4" id="daySelection" multiple>
+                    <% for (let i=0; i<days.length; i++) {%> 
+                        <option id="<%= i+1 %>" value= "<%= i+1 %>"><%= days[i] %></option>
+                    <% } %>
+                </select>
+            </div>
+
+            <div class="col-md-8">
+                <canvas id="timings_chart"></canvas>
+            </div>
+        </div>
+
+        <input type="hidden" id="isp" value="<%= ispTimings%> ">
+        <input type="hidden" id="method" value="<%= methodTimings%> ">
+        <input type="hidden" id="contentTypeData" value="<%= contentTimings%> ">
+        <input type="hidden" id="day" value="<%= dayTimings%> ">
+
+        <script src="/javascript/timings_chart.js"></script>
