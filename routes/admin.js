@@ -120,7 +120,7 @@ router.get("/", isLoggedIn, async (req, res) => {
 
         let object = {
             type: content_type[i], 
-            avg: contentTypeAvgAge[0].average
+            avg: parseInt(contentTypeAvgAge[0].average)
         }
 
         contentTypeArray.push(object)
@@ -138,8 +138,113 @@ router.get("/", isLoggedIn, async (req, res) => {
 
 })
 
-router.get("/timeanalysis", isLoggedIn, (req, res) => {
-    res.render('adminTimeanalysis')
+router.get("/timeanalysis", async (req, res) => {
+
+    const isp = await Har.distinct("userIsp").lean()
+    const http_methods = await Har.distinct("data.method").lean()
+    const content_type = await Har.distinct("data.contenttype").lean()
+    const days = ['Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέμπτη', 'Παρασκευή', 'Σάββατο', 'Κυριακή'];
+
+
+    async function timings_agg(data, field) {
+
+        let query = {}
+
+        let timingsArray = [];
+    
+        for(let i=0; i<data.length; i++) {
+
+            query[field] = data[i];
+    
+            let timingsAvg = await Har.aggregate([
+            {
+                "$match": query
+            },
+    
+            {"$group": 
+                {
+                    "_id": {"$hour": "$data.date"},
+                    "hour": {"$avg": "$data.timing"}, 
+                    "count": { "$sum": 1}
+                } 
+            },
+            {"$group": 
+                {
+                    "_id": null,
+                    "counts": 
+                    {
+                        "$push": 
+                        {
+                            "k": {"$toString": "$_id"}, 
+                            "v": {"avg": "$hour", "count": "$count"}, 
+                        }
+                    }
+                } 
+            }, 
+            { "$replaceRoot": 
+                {
+                    "newRoot": { "$arrayToObject": "$counts"}
+                }
+            }
+        ]);
+    
+            let object = {
+                data: data[i],
+                avgTiming: timingsAvg[0]
+            }
+    
+            timingsArray.push(object)
+        }
+    
+        return timingsArray;
+    }
+
+    const ispTimings = await timings_agg(isp, 'userIsp')
+    const methodTimings = await timings_agg(http_methods, 'data.method')
+    const contentTimings = await timings_agg(content_type, 'data.contenttype')
+
+    const dayTimings = await Har.aggregate([
+        {
+            "$group": {
+                "_id": {
+                    "day": { "$dayOfWeek": "$data.date"}, 
+                    "hour": { "$hour": "$data.date"}
+                },
+                "avgTiming": {"$avg": "$data.timing"}
+            }
+        },
+
+        {
+            "$group": {
+                "_id": null,
+                "counts": 
+                {
+                    "$push": 
+                    {
+                        "k": {"$toString": "$_id.hour"}, 
+                        "v": {"day": "$_id.day", "avgTiming": "$avgTiming"}
+                    }
+                }
+            } 
+        }, 
+        
+        { "$replaceRoot": 
+            {
+                "newRoot": { "$arrayToObject": "$counts"}
+            }
+        }
+    ])
+    
+
+    res.render('adminTimeanalysis',  {
+        isp, 
+        http_methods, 
+        content_type, 
+        days, 
+        ispTimings: JSON.stringify(ispTimings), 
+        methodTimings: JSON.stringify(methodTimings), 
+        contentTimings: JSON.stringify(contentTimings),
+        dayTimings: JSON.stringify(dayTimings)})
 })
 
 router.get("/httpanalysis", isLoggedIn, (req, res) => {
