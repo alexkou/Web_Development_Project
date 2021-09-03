@@ -7,23 +7,14 @@
                 <h4 class="mb-5">Πλήθος Χρηστών: <%= num_users %> </h4>
                 <h4 class="mb-3">Πλήθος εγγραφών ανά τύπο αίτησης</h4>
 
-                <table style="width: 100%" class="mb-5">
-                    <tr>
-                        <th>Μέθοδος</th>
-                        <th>Πλήθος</th>
-                    </tr>
 
-                    <% for (method in methodObject) {%> 
-                        <tr>
-                            <td> <%= method %> </th>
-                            <td> <%= methodObject[method]  %>  </th>
-                    </tr>
-                    <% } %> 
-                </table>
+                <div class="container">
+                    <canvas id="methodsChart"></canvas>
+                </div>
 
                 <h4 class="mb-3">Πλήθος εγγραφών ανά κωδικό απόκρισης</h4>
 
-                <table style="width: 100%" class="mb-5"">
+                <!-- <table style="width: 100%" class="mb-5"">
                     <tr>
                         <th>Κωδικός απόκρισης</th>
                         <% for (status in statusObject) { %> 
@@ -37,12 +28,12 @@
                             <td><%= statusObject[status] %> </td>
                         <% } %> 
                     </tr>
-                </table>
+                </table> -->
 
                 <h4 class="mb-5">Πλήθος μοναδικών Domains: <%= domains %> </h4>
 
                 <h4 class="mb-3">Πλήθος παρόχων συνδεσιμότητας </h4>
-                <table style="width: 100%" class="mb-5">
+                <!-- <table style="width: 100%" class="mb-5">
                     <tr>
                         <th>Πάροχος</th>
                         <th>Αιτήματα</th>
@@ -54,10 +45,10 @@
                             <td> <%= ispObject[isp]  %>  </th>
                     </tr>
                     <% } %> 
-                </table>
+                </table> -->
 
                 <h4 class="mb-3">Μέση ηλικία ιστοαντικειμένων </h4>
-                <table style="width: 100%" class="mb-5">
+                <!-- <table style="width: 100%" class="mb-5">
                     <tr>
                         <th>Content Type</th>
                         <th>Age</th>
@@ -69,11 +60,14 @@
                             <td> <%= contentTypeArray[i].avg  %>  </th>
                     </tr>
                     <% } %> 
-                </table>
-
-
-
+                </table> -->
 
             </div>
         </div>
 
+        <input type="hidden" id="methodObject" value="<%= methodObject%> ">
+        <input type="hidden" id="statusObject" value="<%= statusObject%> ">
+        <input type="hidden" id="ispObject" value="<%= ispObject%> ">
+        <input type="hidden" id="contentTypeArray" value="<%= contentTypeArray%> ">
+
+        <script src="/javascript/adminHome_chart.js"></script>

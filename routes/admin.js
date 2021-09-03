@@ -8,7 +8,7 @@ const HeatMap = require("../models/heatmap");
 const {isLoggedIn} = require('../middleware');
 
 
-router.get("/", isLoggedIn, async (req, res) => {
+router.get("/", async (req, res) => {
 
     const num_users = await User.countDocuments({usertype: 'user'}).lean()
 
@@ -129,10 +129,10 @@ router.get("/", isLoggedIn, async (req, res) => {
 
     res.render('adminHome', {
         num_users, 
-        methodObject: methods[0], 
-        statusObject: statusObject[0], 
+        methodObject: JSON.stringify(methods[0]), 
+        statusObject: JSON.stringify(statusObject[0]), 
         domains: domains.length, 
-        ispObject: ispObject[0],
+        ispObject: JSON.stringify(ispObject[0]),
         contentTypeArray
     });
 
@@ -143,7 +143,7 @@ router.get("/timeanalysis", async (req, res) => {
     const isp = await Har.distinct("userIsp").lean()
     const http_methods = await Har.distinct("data.method").lean()
     const content_type = await Har.distinct("data.contenttype").lean()
-    const days = ['Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέμπτη', 'Παρασκευή', 'Σάββατο', 'Κυριακή'];
+    const days = ['Κυριακή', 'Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέμπτη', 'Παρασκευή', 'Σάββατο'];
 
 
     async function timings_agg(data, field) {
@@ -251,7 +251,8 @@ router.get("/httpanalysis", isLoggedIn, (req, res) => {
     res.render('adminHTTPanalysis')
 })
 
-router.get("/datavisualisation", isLoggedIn, (req, res) => {
+router.get("/datavisualisation", (req, res) => {
+    
     res.render('adminDataVisualisation')
 })
   
