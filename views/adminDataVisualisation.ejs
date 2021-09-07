@@ -2,15 +2,32 @@
 
 <div class="container justify-content-center align-items-center mt-3">
 
-    <div style="padding-top: 25px;"></div>
-
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 mb-3">
             <div id="adminMap"> </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-4" style="text-align:left; margin:auto; display:flex; display:grid;">
+            <label for="users" class="mb-2" style="text-align: center; font-size: larger; font-weight: bold;">Επιλέξτε Χρήστη</label>
+                <select name="users" id="usersSelection" class="form-select mb-3">
+                    <option id="-1" value= ""></option>
+                    <% for (let i=0; i<userIds.length; i++) {%> 
+                        <option id="<%= i %>" value= "<%= userIds[i]._id%>"><%= userIds[i].username %></option> 
+                    <% } %>
+                </select>
+                <button id="clear" class="btn btn-primary">Clear</button>
+        </div>
+        <div style="padding-top: 25px;"></div>
+        <div class="col"></div>
+    </div>
     
 </div>
+
+<input type="hidden" id="usersLatLong" value="<%= usersLatLong %>">
+<input type="hidden" id="requestIps" value="<%= requestIps %>">
+
 
     
 <script src="../javascript/leaflet-heat.js"></script>

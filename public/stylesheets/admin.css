@@ -1,0 +1,17 @@
+#timings_chart {
+    background-color: white;
+}
+
+#canvas_h2 {
+    margin: 15% 0 2% 0;
+    padding: 0;
+}
+
+#adminMap {
+    width: 95%; 
+    height: 550px; 
+    text-align: center; 
+    margin: auto;
+    display: grid; 
+    border: 5px solid whitesmoke;
+}

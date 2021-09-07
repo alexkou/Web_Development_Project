@@ -6,6 +6,7 @@ const Har = require("../models/har");
 const HeatMap = require("../models/heatmap");
 
 const {isLoggedIn} = require('../middleware');
+const { default: axios } = require('axios');
 
 
 router.get("/", async (req, res) => {
@@ -251,9 +252,76 @@ router.get("/httpanalysis", isLoggedIn, (req, res) => {
     res.render('adminHTTPanalysis')
 })
 
-router.get("/datavisualisation", (req, res) => {
+router.get("/datavisualisation", async (req, res) => {
     
-    res.render('adminDataVisualisation')
+    let userIps = await Har.distinct('userIp')
+    let usersLatLong;
+
+    let userIp_Id = await Har.aggregate([
+        {"$group": 
+            {
+                "_id": 
+                {
+                    "ip": "$userIp", 
+                    "id":"$user"
+                 }
+            }
+        }, 
+
+        {"$group": 
+        {
+            "_id": null,
+            "counts": 
+            {
+                "$push": 
+                {
+                    "k": "$_id.ip", 
+                    "v": "$_id.id"
+                }
+            }
+        } 
+    }, 
+
+    { "$replaceRoot": 
+        {
+            "newRoot": { "$arrayToObject": "$counts"}
+        }
+    }
+]);
+
+
+    try {
+        const response = await axios({method: 'post',  url: "http://ip-api.com/batch/?fields=query,lat,lon", data: userIps})
+        usersLatLong = response.data
+
+    } catch (error) {
+        console.log(error)
+    }
+
+
+    let my_object = userIp_Id[0];
+    let key_array = Object.keys(my_object);
+
+
+    for(let i=0; i<key_array.length; i++) {
+        for(let j=0; j<usersLatLong.length; j++) {
+            if(key_array[i] == usersLatLong[j].query) {
+                usersLatLong[j].id = my_object[usersLatLong[j].query]
+                delete usersLatLong[j].query
+            }
+        }
+    } 
+
+    let userIds = await User.find({usertype: 'user'}, {_id: 1, username:1})
+    
+    let requestIps = [];
+
+    for (let i=0; i<userIds.length; i++) {
+        requestIps[i] = await HeatMap.find({user: Object(`${userIds[i]._id}`)}, {lat:1, lon:1, intensity:1, user:1 ,_id:0 })
+    }
+
+
+    res.render('adminDataVisualisation', {userIds, usersLatLong: JSON.stringify(usersLatLong), requestIps: JSON.stringify(requestIps)})
 })
   
 
