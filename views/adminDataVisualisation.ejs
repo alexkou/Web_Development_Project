@@ -2,17 +2,15 @@
 
 <div class="container justify-content-center align-items-center mt-3">
 
-    <div style="padding-top: 25px;"></div>
-
     <div class="row">
         <div class="col-12 mb-3">
-            <div id="adminMap" style="height: 500px; width: 1000px;"> </div>
+            <div id="adminMap"> </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-4" style="text-align:left; margin:auto; display:flex; display:grid; padding-top: 1.5rem;">
-            <label for="users" class="mb-2">Επιλέξτε Χρήστη:</label>
+        <div class="col-md-4" style="text-align:left; margin:auto; display:flex; display:grid;">
+            <label for="users" class="mb-2" style="text-align: center; font-size: larger; font-weight: bold;">Επιλέξτε Χρήστη</label>
                 <select name="users" id="usersSelection" class="form-select mb-3">
                     <option id="-1" value= ""></option>
                     <% for (let i=0; i<userIds.length; i++) {%> 
@@ -21,6 +19,7 @@
                 </select>
                 <button id="clear" class="btn btn-primary">Clear</button>
         </div>
+        <div style="padding-top: 25px;"></div>
         <div class="col"></div>
     </div>
     
