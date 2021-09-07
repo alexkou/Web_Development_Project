@@ -1,10 +1,11 @@
 <% layout('layouts/adminLayout') %>
 
-<div class="container justify-content-center align-items-center mt-3">
-    <h2 class="mb-5">Βασικές Πληροφορίες</h2>
+    <div class="container justify-content-center align-items-center mt-3">
+        <h2 class="mb-5">Βασικές Πληροφορίες</h2>
         <div class="row">
             <div class="col-md-6">
-                <h4 class="mb-5">Πλήθος Χρηστών: <%= num_users %> </h4>
+                <h4 class="mb-5">Πλήθος Χρηστών: <%= num_users %>
+                </h4>
                 <h4 class="mb-3">Πλήθος εγγραφών ανά τύπο αίτησης</h4>
 
 
@@ -14,53 +15,24 @@
 
                 <h4 class="mb-3">Πλήθος εγγραφών ανά κωδικό απόκρισης</h4>
 
-                <!-- <table style="width: 100%" class="mb-5"">
-                    <tr>
-                        <th>Κωδικός απόκρισης</th>
-                        <% for (status in statusObject) { %> 
-                            <td><%= status %> </td>
-                        <% } %> 
-                    </tr>
+                <div class="container">
+                    <canvas id="statusChart"></canvas>
+                </div>
 
-                    <tr>
-                        <th>Πλήθος</th>
-                        <% for (status in statusObject) { %> 
-                            <td><%= statusObject[status] %> </td>
-                        <% } %> 
-                    </tr>
-                </table> -->
-
-                <h4 class="mb-5">Πλήθος μοναδικών Domains: <%= domains %> </h4>
+                <h4 class="mb-5">Πλήθος μοναδικών Domains: <%= domains %>
+                </h4>
 
                 <h4 class="mb-3">Πλήθος παρόχων συνδεσιμότητας </h4>
-                <!-- <table style="width: 100%" class="mb-5">
-                    <tr>
-                        <th>Πάροχος</th>
-                        <th>Αιτήματα</th>
-                    </tr>
 
-                    <% for (isp in ispObject) {%> 
-                        <tr>
-                            <td> <%= isp %> </th>
-                            <td> <%= ispObject[isp]  %>  </th>
-                    </tr>
-                    <% } %> 
-                </table> -->
+                <div class="container">
+                    <canvas id="ispChart"></canvas>
+                </div>
 
                 <h4 class="mb-3">Μέση ηλικία ιστοαντικειμένων </h4>
-                <!-- <table style="width: 100%" class="mb-5">
-                    <tr>
-                        <th>Content Type</th>
-                        <th>Age</th>
-                    </tr>
 
-                    <% for (let i=0; i<contentTypeArray.length; i++) {%> 
-                        <tr>
-                            <td> <%= contentTypeArray[i].type %> </th>
-                            <td> <%= contentTypeArray[i].avg  %>  </th>
-                    </tr>
-                    <% } %> 
-                </table> -->
+                <div class="container">
+                    <canvas id="contentChart"></canvas>
+                </div>
 
             </div>
         </div>
