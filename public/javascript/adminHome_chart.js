@@ -30,13 +30,8 @@ var methodObject = JSON.parse(document.getElementById("methodObject").value);
 for (method in methodObject) {
     chart1.data.labels.push(method)
     chart1.data.datasets[0].data.push(methodObject[method])
-
     random_colors1();
 }
-
-
-random_colors(chart1);
-
 
 chart1.update();
 
@@ -178,10 +173,4 @@ function random_colors3() {
     var color = "rgba(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ",";
     chart3.data.datasets[0].backgroundColor.push(color + "0.6)");
     chart3.data.datasets[0].borderColor.push(color + "1)");
-
-    function random_colors(chart) {
-        var color = "rgba(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ",";
-        chart.data.datasets[0].backgroundColor.push(color + "0.6)");
-        chart.data.datasets[0].borderColor.push(color + "1");
-    }
 }
