@@ -1,7 +1,7 @@
 <% layout('layouts/adminLayout') %>
 
     <div class="container justify-content-center align-items-center mt-3">
-        <h2 class="mb-5">Βασικές Πληροφορίες</h2>
+        <h2 class="mb-5"><b><u>Βασικές Πληροφορίες</u></b></h2>
         <div class="row">
             <div class="col-md-6">
                 <h4 class="mb-5">Πλήθος Χρηστών: <%= num_users %>
@@ -13,12 +13,14 @@
                     <canvas id="methodsChart"></canvas>
                 </div>
 
+                <br>
                 <h4 class="mb-3">Πλήθος εγγραφών ανά κωδικό απόκρισης</h4>
 
                 <div class="container">
                     <canvas id="statusChart"></canvas>
                 </div>
 
+                <br>
                 <h4 class="mb-5">Πλήθος μοναδικών Domains: <%= domains %>
                 </h4>
 
@@ -28,6 +30,7 @@
                     <canvas id="ispChart"></canvas>
                 </div>
 
+                <br>
                 <h4 class="mb-3">Μέση ηλικία ιστοαντικειμένων </h4>
 
                 <div class="container">
