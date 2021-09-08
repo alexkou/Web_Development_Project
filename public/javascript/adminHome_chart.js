@@ -1,7 +1,7 @@
 var methodsChart = document.getElementById('methodsChart').getContext('2d');
 
 let chart1 = new Chart(methodsChart, {
-    type: 'pie',
+    type: 'bar',
     data: {
         labels: [],
 
@@ -42,7 +42,7 @@ console.log(methodObject)
 var statusChart = document.getElementById('statusChart').getContext('2d');
 
 let chart2 = new Chart(statusChart, {
-    type: 'pie',
+    type: 'bar',
     data: {
         labels: [],
 
@@ -80,7 +80,7 @@ chart2.update();
 var ispChart = document.getElementById('ispChart').getContext('2d');
 
 let chart3 = new Chart(ispChart, {
-    type: 'pie',
+    type: 'bar',
     data: {
         labels: [],
 
