@@ -1,43 +1,48 @@
 <% layout('layouts/adminLayout') %>
 
     <div class="container justify-content-center align-items-center mt-3">
-        <h2 class="mb-5"><b><u>Βασικές Πληροφορίες</u></b></h2>
-        <div class="row">
-            <div class="col-md-6">
-                <h4 class="mb-5">Πλήθος Χρηστών: <%= num_users %>
-                </h4>
-                <h4 class="mb-3">Πλήθος εγγραφών ανά τύπο αίτησης</h4>
-
-
-                <div class="container">
-                    <canvas id="methodsChart"></canvas>
+        <h2 class="mb-5" style="text-align: center;"><b><u>Βασικές Πληροφορίες</u></b></h2>
+            
+            <div class="container">
+                <div class="row">
+                <div class="col-xs-6 col-sm-6">
+                    <h4 class="mb-5" style="text-align:center;">Πλήθος Χρηστών: <%= num_users %>
+                    </h4>
+                    
+                    
+                    <h4 class="mb-3" style="text-align:center;">Πλήθος εγγραφών ανά τύπο αίτησης</h4>
+                    <div class="container">
+                        <canvas id="methodsChart"></canvas>
+                    </div>
+    
+                    <br>
+                    
+                    <h4 class="mb-3" style="text-align:center;">Πλήθος εγγραφών ανά κωδικό απόκρισης</h4>
+                    <div class="container">
+                        <canvas id="statusChart"></canvas>
+                    </div>           
+                    </div>
+                    
+                    <div class="col-xs-6 col-sm-6">
+                        <h4 class="mb-5" style="text-align:center;">Πλήθος μοναδικών Domains: <%= domains %>
+                        </h4>
+        
+                        <h4 class="mb-3" style="text-align:center;">Πλήθος παρόχων συνδεσιμότητας </h4>
+                        <div class="container">
+                            <canvas id="ispChart"></canvas>
+                        </div>
+        
+                        <br>
+                        
+                        <h4 class="mb-3" style="text-align:center;">Μέση ηλικία ιστοαντικειμένων </h4>
+                        <div class="container">
+                            <canvas id="contentChart"></canvas>
+                        </div>
+                    </div>      
+                </div>
                 </div>
 
-                <br>
-                <h4 class="mb-3">Πλήθος εγγραφών ανά κωδικό απόκρισης</h4>
 
-                <div class="container">
-                    <canvas id="statusChart"></canvas>
-                </div>
-
-                <br>
-                <h4 class="mb-5">Πλήθος μοναδικών Domains: <%= domains %>
-                </h4>
-
-                <h4 class="mb-3">Πλήθος παρόχων συνδεσιμότητας </h4>
-
-                <div class="container">
-                    <canvas id="ispChart"></canvas>
-                </div>
-
-                <br>
-                <h4 class="mb-3">Μέση ηλικία ιστοαντικειμένων </h4>
-
-                <div class="container">
-                    <canvas id="contentChart"></canvas>
-                </div>
-
-            </div>
         </div>
 
         <input type="hidden" id="methodObject" value="<%= methodObject%> ">
