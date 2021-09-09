@@ -6,13 +6,19 @@ let chart1 = new Chart(methodsChart, {
         labels: [],
 
         datasets: [{
-            label: 'Method',
             data: [],
             backgroundColor: [],
             borderColor: [],
-            borderWidth: 1
+            borderWidth: 1,
+            datalabels: {
+                anchor: "end",
+                align: "top",
+                offset: 0
+            }
         }]
     },
+
+    plugins: [ChartDataLabels],
 
     options: {
         y: [{
@@ -20,7 +26,19 @@ let chart1 = new Chart(methodsChart, {
                 beginAtZero: true,
                 stepSize: 1
             }
-        }]
+        }],
+
+        legend: {
+            display: false
+        },
+
+        title: {
+            display: true,
+            text: "Methods",
+            fontSize: 15,
+            padding: 15
+        }
+
     }
 })
 
@@ -30,13 +48,10 @@ var methodObject = JSON.parse(document.getElementById("methodObject").value);
 for (method in methodObject) {
     chart1.data.labels.push(method)
     chart1.data.datasets[0].data.push(methodObject[method])
-    random_colors1();
+    random_colors(chart1);
 }
 
 chart1.update();
-
-
-console.log(methodObject)
 
 
 var statusChart = document.getElementById('statusChart').getContext('2d');
@@ -47,13 +62,20 @@ let chart2 = new Chart(statusChart, {
         labels: [],
 
         datasets: [{
-            label: 'Status',
             data: [],
             backgroundColor: [],
             borderColor: [],
-            borderWidth: 1
+            borderWidth: 1,
+            datalabels: {
+                anchor: "end",
+                align: "top",
+                offset: 0
+            }
         }]
     },
+
+    plugins: [ChartDataLabels],
+
 
     options: {
         y: [{
@@ -61,7 +83,18 @@ let chart2 = new Chart(statusChart, {
                 beginAtZero: true,
                 stepSize: 1
             }
-        }]
+        }],
+
+        legend: {
+            display: false
+        },
+
+        title: {
+            display: true,
+            text: "Status",
+            fontSize: 15,
+        }
+
     }
 })
 
@@ -71,7 +104,7 @@ var statusObject = JSON.parse(document.getElementById("statusObject").value);
 for (stat in statusObject) {
     chart2.data.labels.push(stat)
     chart2.data.datasets[0].data.push(statusObject[stat])
-    random_colors2();
+    random_colors(chart2);
 }
 
 chart2.update();
@@ -85,13 +118,19 @@ let chart3 = new Chart(ispChart, {
         labels: [],
 
         datasets: [{
-            label: 'ISP',
             data: [],
             backgroundColor: [],
             borderColor: [],
-            borderWidth: 1
+            borderWidth: 1,
+            datalabels: {
+                anchor: "end",
+                align: "top",
+                offset: 0
+            }
         }]
     },
+
+    plugins: [ChartDataLabels],
 
     options: {
         y: [{
@@ -99,7 +138,18 @@ let chart3 = new Chart(ispChart, {
                 beginAtZero: true,
                 stepSize: 1
             }
-        }]
+        }],
+
+        legend: {
+            display: false
+        },
+
+        title: {
+            display: true,
+            text: "ISP",
+            fontSize: 15,
+            padding: 15
+        }
     }
 })
 
@@ -109,7 +159,7 @@ var ispObject = JSON.parse(document.getElementById("ispObject").value);
 for (isp in ispObject) {
     chart3.data.labels.push(isp)
     chart3.data.datasets[0].data.push(ispObject[isp])
-    random_colors3();
+    random_colors(chart3);
 }
 
 chart3.update();
@@ -157,20 +207,9 @@ chart4.update();
 
 //  }
 
-function random_colors1() {
+function random_colors(chart) {
     var color = "rgba(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ",";
-    chart1.data.datasets[0].backgroundColor.push(color + "0.6)");
-    chart1.data.datasets[0].borderColor.push(color + "1)");
+    chart.data.datasets[0].backgroundColor.push(color + "0.6)");
+    chart.data.datasets[0].borderColor.push(color + "1)");
 }
 
-function random_colors2() {
-    var color = "rgba(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ",";
-    chart2.data.datasets[0].backgroundColor.push(color + "0.6)");
-    chart2.data.datasets[0].borderColor.push(color + "1)");
-}
-
-function random_colors3() {
-    var color = "rgba(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ",";
-    chart3.data.datasets[0].backgroundColor.push(color + "0.6)");
-    chart3.data.datasets[0].borderColor.push(color + "1)");
-}
