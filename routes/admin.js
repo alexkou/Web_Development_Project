@@ -9,7 +9,7 @@ const {isLoggedIn} = require('../middleware');
 const { default: axios } = require('axios');
 
 
-router.get("/", async (req, res) => {
+router.get("/", isLoggedIn, async (req, res) => {
 
     const num_users = await User.countDocuments({usertype: 'user'}).lean()
 
@@ -128,18 +128,19 @@ router.get("/", async (req, res) => {
 
     }
 
+
     res.render('adminHome', {
         num_users, 
         methodObject: JSON.stringify(methods[0]), 
         statusObject: JSON.stringify(statusObject[0]), 
         domains: domains.length, 
         ispObject: JSON.stringify(ispObject[0]),
-        contentTypeArray
+        contentTypeArray: JSON.stringify(contentTypeArray)
     });
 
 })
 
-router.get("/timeanalysis", async (req, res) => {
+router.get("/timeanalysis", isLoggedIn, async (req, res) => {
 
     const isp = await Har.distinct("userIsp").lean()
     const http_methods = await Har.distinct("data.method").lean()
@@ -236,6 +237,7 @@ router.get("/timeanalysis", async (req, res) => {
         }
     ])
     
+    // console.log(dayTimings)
 
     res.render('adminTimeanalysis',  {
         isp, 
@@ -252,7 +254,7 @@ router.get("/httpanalysis", isLoggedIn, (req, res) => {
     res.render('adminHTTPanalysis')
 })
 
-router.get("/datavisualisation", async (req, res) => {
+router.get("/datavisualisation", isLoggedIn, async (req, res) => {
     
     let userIps = await Har.distinct('userIp')
     let usersLatLong;
