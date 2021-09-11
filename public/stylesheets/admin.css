@@ -2,19 +2,7 @@ h2 { color: #000000; font-family: "Great Vibes", cursive; text-shadow: 0 1px 1px
 
 h4 { color: #000000; font-family: "Great Vibes", cursive; text-shadow: 0 1px 1px #fff; }
 
-#timings_chart {
-    background-color: white;
-}
-
-#methodsChart {
-    background-color: white;
-}
-
-#statusChart {
-    background-color: white;
-}
-
-#ispChart {
+#timings_chart, #methodsChart, #statusChart, #ispChart, #contentChart {
     background-color: white;
 }
 

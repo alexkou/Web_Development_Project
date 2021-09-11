@@ -173,13 +173,19 @@ let chart4 = new Chart(contentChart, {
         labels: [],
 
         datasets: [{
-            label: 'Content Type',
             data: [],
             backgroundColor: [],
             borderColor: [],
-            borderWidth: 1
+            borderWidth: 1,
+            datalabels: {
+                anchor: "end",
+                align: "top",
+                offset: 0
+            }
         }]
     },
+
+    plugins: [ChartDataLabels],
 
     options: {
         y: [{
@@ -187,25 +193,34 @@ let chart4 = new Chart(contentChart, {
                 beginAtZero: true,
                 stepSize: 1
             }
-        }]
+        }],
+
+        legend: {
+            display: false
+        },
+
+        title: {
+            display: true,
+            text: "Average age",
+            fontSize: 15,
+            padding: 15
+        }
+
     }
 })
 
 
 var contentTypeArray = JSON.parse(document.getElementById("contentTypeArray").value);
 
-for (content in contentTypeArray) {
-    chart4.data.labels.push(content)
-    chart4.data.datasets[0].data.push(contentTypeArray[content].avg)
-}
 
-chart4.update();
+for (let i=0; i<contentTypeArray.length; i++) { 
+    chart4.data.labels.push(contentTypeArray[i].type)
+    chart4.data.datasets[0].data.push(contentTypeArray[i].avg)
+    random_colors(chart4)
+ }
 
-// for (let i=0; i<contentTypeArray.length; i++) { 
-//         contentTypeArray[i].type
-//         contentTypeArray[i].avg
+ chart4.update();
 
-//  }
 
 function random_colors(chart) {
     var color = "rgba(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ",";
