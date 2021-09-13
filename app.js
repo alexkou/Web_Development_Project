@@ -25,7 +25,7 @@ mongoose.connect("mongodb+srv://alexkou:webproject@cluster0.yt9j6.mongodb.net/pr
   useCreateIndex: true,
   useUnifiedTopology: true,
 });
-
+ 
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -113,6 +113,10 @@ app.get('/logout', (req,res) => {
 app.use('/user', userRoutes);
 app.use('/admin', adminRoutes);
 
+
+app.all('*', (req,res) => {
+  res.send("Page Not Found!")
+})
 
 app.listen(3000, () => {
   console.log("Listening to port 3000");

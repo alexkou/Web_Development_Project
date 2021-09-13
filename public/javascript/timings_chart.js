@@ -212,12 +212,15 @@ document.getElementById('ispSelection').onchange = function() {
 
 var days = JSON.parse(document.getElementById('day').value);
 
+
 days = days[0];
 
 temp = days;
 temp = Object.keys(temp).map(i => temp[i]);
+
 const unique = [...new Set(temp.map(item => item.day))];
 const daysObject = []
+
 for (let i = 0; i < unique.length; i++) {
     daysObject.push({
         day: unique[i],
@@ -225,18 +228,18 @@ for (let i = 0; i < unique.length; i++) {
     })
 }
 
-for (hour in days) {
+for (entry in days) {
     for (u of daysObject) {
-        if (days[hour].day == u.day) {
-            let temp = {[hour]: days[hour].avgTiming}
-            u.avg[[hour]] = days[hour].avgTiming
+        if (days[entry].day == u.day) {
+            let temp = {[days[entry].hour]: parseFloat(entry)}
+            u.avg[[days[entry].hour]] = parseFloat(entry)
         }
     }
 }
 
 
 document.getElementById('daySelection').onchange = function() {
-    chart.data.datasets[0].label = "Day"
+    chart.data.datasets[0].label = "Timings"
     chart.data.datasets[0].data = [];
 
     var choices = $(this).val();

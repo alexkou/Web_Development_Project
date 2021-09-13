@@ -113,7 +113,7 @@ router.get("/", isLoggedIn, async (req, res) => {
             {
                 "$group": {
                     "_id": content_type[i],
-                    "average": {"$avg": {"$toInt": "$data.age"}}
+                    "average": { "$avg": {"$subtract": ["$data.date", "$data.lastmodified"]}}
                 }
             }
 
@@ -121,13 +121,12 @@ router.get("/", isLoggedIn, async (req, res) => {
 
         let object = {
             type: content_type[i], 
-            avg: parseInt(contentTypeAvgAge[0].average)
+            avg: parseInt((contentTypeAvgAge[0].average) / 86400000)
         }
 
         contentTypeArray.push(object)
 
     }
-
 
     res.render('adminHome', {
         num_users, 
@@ -140,7 +139,7 @@ router.get("/", isLoggedIn, async (req, res) => {
 
 })
 
-router.get("/timeanalysis", isLoggedIn, async (req, res) => {
+router.get("/timeanalysis", async (req, res) => {
 
     const isp = await Har.distinct("userIsp").lean()
     const http_methods = await Har.distinct("data.method").lean()
@@ -223,8 +222,8 @@ router.get("/timeanalysis", isLoggedIn, async (req, res) => {
                 {
                     "$push": 
                     {
-                        "k": {"$toString": "$_id.hour"}, 
-                        "v": {"day": "$_id.day", "avgTiming": "$avgTiming"}
+                        "k": {"$toString": "$avgTiming"},
+                        "v": {"day": "$_id.day", "hour": "$_id.hour"}
                     }
                 }
             } 
@@ -236,9 +235,7 @@ router.get("/timeanalysis", isLoggedIn, async (req, res) => {
             }
         }
     ])
-    
-    // console.log(dayTimings)
-
+        
     res.render('adminTimeanalysis',  {
         isp, 
         http_methods, 
@@ -247,7 +244,8 @@ router.get("/timeanalysis", isLoggedIn, async (req, res) => {
         ispTimings: JSON.stringify(ispTimings), 
         methodTimings: JSON.stringify(methodTimings), 
         contentTimings: JSON.stringify(contentTimings),
-        dayTimings: JSON.stringify(dayTimings)})
+        dayTimings: JSON.stringify(dayTimings)
+    })
 })
 
 router.get("/httpanalysis", isLoggedIn, (req, res) => {

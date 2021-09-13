@@ -201,7 +201,7 @@ let chart4 = new Chart(contentChart, {
 
         title: {
             display: true,
-            text: "Average age",
+            text: "Age (days)",
             fontSize: 15,
             padding: 15
         }
