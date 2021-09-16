@@ -35,7 +35,7 @@ const HarSchema = new Schema ({
         expires: String,
         age: Number,
         lastmodified: Date,
-        Host: String,
+        host: String,
     }
 });
 
