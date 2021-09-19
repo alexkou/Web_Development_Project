@@ -13,18 +13,18 @@ const adminRoutes = require('./routes/admin');
 const User = require("./models/user");
 
 // Local database
-// mongoose.connect("mongodb://localhost:27017/project", {
-//   useNewUrlParser: true,
-//   useCreateIndex: true,
-//   useUnifiedTopology: true,
-// });
-
-// Cloud database
-mongoose.connect("mongodb+srv://alexkou:webproject@cluster0.yt9j6.mongodb.net/project?retryWrites=true&w=majority", {
+mongoose.connect("mongodb://localhost:27017/project", {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
 });
+
+// Cloud database
+// mongoose.connect("mongodb+srv://alexkou:webproject@cluster0.yt9j6.mongodb.net/project?retryWrites=true&w=majority", {
+//   useNewUrlParser: true,
+//   useCreateIndex: true,
+//   useUnifiedTopology: true,
+// });
  
 
 const db = mongoose.connection;

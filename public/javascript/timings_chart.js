@@ -124,11 +124,9 @@ document.getElementById('httpMethod').onchange = function() {
                     for (key in temp) {
                         if(!(key in avgObj)) {
                             avgObj[`${key}`] = temp[key]
-                            console.log(avgObj)
                         } else if(key in avgObj) {
                             avgObj[key].avg = ((avgObj[key].avg * avgObj[key].count) + (temp[key].avg * temp[key].count)) / (avgObj[key].count + temp[key].count);
                             avgObj[key].count = avgObj[key].count + temp[key].count;
-                            console.log(avgObj)
                         }
                     }
                 }

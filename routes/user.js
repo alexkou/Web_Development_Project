@@ -5,11 +5,11 @@ const User = require("../models/user");
 const Har = require("../models/har");
 const HeatMap = require("../models/heatmap");
 
-const {isLoggedIn} = require('../middleware');
+const {isLoggedIn, isUser} = require('../middleware');
 const getUserInfo = require("../public/javascript/userInfo");
 const GeoData = require('../public/javascript/GeoData');
 
-router.get("/", isLoggedIn, async (req, res) => {
+router.get("/", isLoggedIn, isUser, async (req, res) => {
 
   try {
     const entries = await Har.find({user: req.user._id}).sort({timestamp: -1}).lean()
@@ -25,10 +25,14 @@ router.get("/", isLoggedIn, async (req, res) => {
   }
 });
 
-router.get("/profile", isLoggedIn, (req, res) => {
+router.get("/profile", isLoggedIn, isUser, (req, res) => {
     res.render('userProfile')
 })
   
+router.get('/data', isLoggedIn, isUser, (req, res) => {
+  res.render('userData')
+})
+
 router.post("/passwordUpdate", isLoggedIn, (req, res) => {
     const {current_password, password} = req.body;
     req.user.changePassword(current_password, password, err => {
@@ -61,7 +65,6 @@ router.post("/usernameUpdate", isLoggedIn, async (req, res) => {
     }
 })
   
-  
 router.post('/harUpload', isLoggedIn, async (req, res) => {
     let {harOutput} = req.body;
     json_file = JSON.parse(harOutput);
@@ -92,10 +95,5 @@ router.post('/harUpload', isLoggedIn, async (req, res) => {
     res.redirect('/user')
 })
   
-
-router.get('/data', isLoggedIn, (req, res) => {
-    res.render('userData')
-})
-
 
 module.exports = router;

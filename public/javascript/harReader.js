@@ -75,7 +75,7 @@ document.getElementById("harInput").onchange = function () {
       let temp_array = [];
 
       for (let i=0; i<=params.length-1; i++) {
-        if (i == params.length-1) {
+        if (params[i] === "host") {
           temp_array = headers_extract(params[i], request_headers);
         }
         else {
@@ -89,13 +89,13 @@ document.getElementById("harInput").onchange = function () {
 
     let finalData = final_object();
     
-    var json_format = JSON.stringify(finalData,null,2)
+    var json_string = JSON.stringify(finalData,null,2)
 
-    document.getElementById("harOutput").value = json_format;
+    document.getElementById("harOutput").value = json_string;
 
     document.getElementById("harDownload").onclick = function () {
       const a = document.createElement("a");
-      a.href = URL.createObjectURL(new Blob([json_format], {type: "text/plain"}));
+      a.href = URL.createObjectURL(new Blob([json_string], {type: "text/plain"}));
       a.setAttribute("download", (evt.target.fileName).slice(0, -4));
       document.body.appendChild(a);
       a.click();

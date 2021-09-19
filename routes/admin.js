@@ -5,11 +5,11 @@ const User = require("../models/user");
 const Har = require("../models/har");
 const HeatMap = require("../models/heatmap");
 
-const {isLoggedIn} = require('../middleware');
+const {isLoggedIn, isAdmin} = require('../middleware');
 const { default: axios } = require('axios');
 
 
-router.get("/", isLoggedIn, async (req, res) => {
+router.get("/", isLoggedIn, isAdmin, async (req, res) => {
 
     const num_users = await User.countDocuments({usertype: 'user'}).lean()
 
@@ -139,7 +139,7 @@ router.get("/", isLoggedIn, async (req, res) => {
 
 })
 
-router.get("/timeanalysis", async (req, res) => {
+router.get("/timeanalysis", isLoggedIn, isAdmin, async (req, res) => {
 
     const isp = await Har.distinct("userIsp").lean()
     const http_methods = await Har.distinct("data.method").lean()
@@ -165,7 +165,7 @@ router.get("/timeanalysis", async (req, res) => {
             {"$group": 
                 {
                     "_id": {"$hour": "$data.date"},
-                    "hour": {"$avg": "$data.timing"}, 
+                    "timing": {"$avg": "$data.timing"}, 
                     "count": { "$sum": 1}
                 } 
             },
@@ -177,7 +177,7 @@ router.get("/timeanalysis", async (req, res) => {
                         "$push": 
                         {
                             "k": {"$toString": "$_id"}, 
-                            "v": {"avg": "$hour", "count": "$count"}, 
+                            "v": {"avg": "$timing", "count": "$count"}
                         }
                     }
                 } 
@@ -248,11 +248,11 @@ router.get("/timeanalysis", async (req, res) => {
     })
 })
 
-router.get("/httpanalysis", isLoggedIn, (req, res) => {
+router.get("/httpanalysis", isLoggedIn, isAdmin, (req, res) => {
     res.render('adminHTTPanalysis')
 })
 
-router.get("/datavisualisation", isLoggedIn, async (req, res) => {
+router.get("/datavisualisation", isLoggedIn, isAdmin, async (req, res) => {
     
     let userIps = await Har.distinct('userIp')
     let usersLatLong;
@@ -263,31 +263,31 @@ router.get("/datavisualisation", isLoggedIn, async (req, res) => {
                 "_id": 
                 {
                     "ip": "$userIp", 
-                    "id":"$user"
+                    "id": "$user"
                  }
             }
         }, 
 
         {"$group": 
-        {
-            "_id": null,
-            "counts": 
             {
-                "$push": 
+                "_id": null,
+                "counts": 
                 {
-                    "k": "$_id.ip", 
-                    "v": "$_id.id"
+                    "$push": 
+                    {
+                        "k": "$_id.ip", 
+                        "v": "$_id.id"
+                    }
                 }
-            }
-        } 
-    }, 
+            } 
+        }, 
 
-    { "$replaceRoot": 
-        {
-            "newRoot": { "$arrayToObject": "$counts"}
+        { "$replaceRoot": 
+            {
+                "newRoot": { "$arrayToObject": "$counts"}
+            }
         }
-    }
-]);
+    ]);
 
 
     try {
